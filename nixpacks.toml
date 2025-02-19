@@ -20,6 +20,9 @@
     dependsOn = ['caddy'] # make sure this phase runs after the 'caddy' phase so that we know we have caddy downloaded
     cmds = ['caddy fmt --overwrite Caddyfile'] # format the Caddyfile to fix any formatting inconsistencies
 
+[phases.install]
+    cmds = ['npm i --legacy-peer-deps']
+
 # compute the output path and start the caddy web server
 [start]
     cmd = 'export ANGULAR_OUTPUT_PATH=$(jq -r "[.projects[] | .architect.build.options.outputPath][0]" angular.json) && exec caddy run --config Caddyfile --adapter caddyfile 2>&1' # load the contents of the output file into a variable and start caddy using the Caddyfile config and caddyfile adapter
